@@ -35,6 +35,8 @@ if (COMMAND cmake_policy)
     cmake_policy (SET CMP0063 OLD)
 endif ()
 
+set (CMAKE_SYSTEM_VERSION 10.0 (latest installed version))
+
 # Set project name
 project (Urho3D)
 
