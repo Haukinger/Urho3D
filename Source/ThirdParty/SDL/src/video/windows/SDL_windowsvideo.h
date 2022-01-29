@@ -79,7 +79,7 @@ typedef struct _TOUCHINPUT {
 
 #endif /* WINVER < 0x0601 */
 
-#if WINVER < 0x0603
+//#if WINVER < 0x0603
 
 typedef enum MONITOR_DPI_TYPE {
     MDT_EFFECTIVE_DPI = 0,
@@ -88,7 +88,7 @@ typedef enum MONITOR_DPI_TYPE {
     MDT_DEFAULT = MDT_EFFECTIVE_DPI
 } MONITOR_DPI_TYPE;
 
-#endif /* WINVER < 0x0603 */
+//#endif /* WINVER < 0x0603 */
 
 typedef BOOL  (*PFNSHFullScreen)(HWND, DWORD);
 typedef void  (*PFCoordTransform)(SDL_Window*, POINT*);
