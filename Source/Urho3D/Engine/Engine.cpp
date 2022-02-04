@@ -734,61 +734,61 @@ int Engine::ApplyFrameLimit()
     if (!initialized_)
         return 0;
 
-    unsigned maxFps = maxFps_;
-    Input* input = GetSubsystem<Input>();
-    if (input && !input->HasFocus())
-        maxFps = Min(maxInactiveFps_, maxFps);
-
-    long long elapsed = 0;
-
-#ifndef __EMSCRIPTEN__
-    // Perform waiting loop if maximum FPS set
-#if !defined(IOS) && !defined(TVOS)
-    if (maxFps)
-#else
-    // If on iOS/tvOS and target framerate is 60 or above, just let the animation callback handle frame timing
-    // instead of waiting ourselves
-    if (maxFps < 60)
-#endif
-    {
-        URHO3D_PROFILE(ApplyFrameLimit);
-
-        long long targetMax = 1000000LL / maxFps;
-
-        for (;;)
-        {
-            elapsed = frameTimer_.GetUSec(false);
-            if (elapsed >= targetMax)
-                break;
-
-            // Sleep if 1 ms or more off the frame limiting goal
-            if (targetMax - elapsed >= 1000LL)
-            {
-                unsigned sleepTime = (unsigned)((targetMax - elapsed) / 1000LL);
-                Time::Sleep(sleepTime);
-            }
-        }
-    }
-#endif
+//    unsigned maxFps = maxFps_;
+//    Input* input = GetSubsystem<Input>();
+//    if (input && !input->HasFocus())
+//        maxFps = Min(maxInactiveFps_, maxFps);
+//
+//    long long elapsed = 0;
+//
+//#ifndef __EMSCRIPTEN__
+//    // Perform waiting loop if maximum FPS set
+//#if !defined(IOS) && !defined(TVOS)
+//    if (maxFps)
+//#else
+//    // If on iOS/tvOS and target framerate is 60 or above, just let the animation callback handle frame timing
+//    // instead of waiting ourselves
+//    if (maxFps < 60)
+//#endif
+//    {
+//        URHO3D_PROFILE(ApplyFrameLimit);
+//
+//        long long targetMax = 1000000LL / maxFps;
+//
+//        for (;;)
+//        {
+//            elapsed = frameTimer_.GetUSec(false);
+//            if (elapsed >= targetMax)
+//                break;
+//
+//            // Sleep if 1 ms or more off the frame limiting goal
+//            if (targetMax - elapsed >= 1000LL)
+//            {
+//                unsigned sleepTime = (unsigned)((targetMax - elapsed) / 1000LL);
+//                Time::Sleep(sleepTime);
+//            }
+//        }
+//    }
+//#endif
 
     elapsed = frameTimer_.GetUSec(true);
-#ifdef URHO3D_TESTING
-    if (timeOut_ > 0)
-    {
-        timeOut_ -= elapsed;
-        if (timeOut_ <= 0)
-            Exit();
-    }
-#endif
-
-    // If FPS lower than minimum, clamp elapsed time
-    if (minFps_)
-    {
-        long long targetMin = 1000000LL / minFps_;
-        if (elapsed > targetMin)
-            elapsed = targetMin;
-    }
-
+//#ifdef URHO3D_TESTING
+//    if (timeOut_ > 0)
+//    {
+//        timeOut_ -= elapsed;
+//        if (timeOut_ <= 0)
+//            Exit();
+//    }
+//#endif
+//
+//    // If FPS lower than minimum, clamp elapsed time
+//    if (minFps_)
+//    {
+//        long long targetMin = 1000000LL / minFps_;
+//        if (elapsed > targetMin)
+//            elapsed = targetMin;
+//    }
+//
     // Perform timestep smoothing
     timeStep_ = 0.0f;
     lastTimeSteps_.Push(elapsed / 1000000.0f);
